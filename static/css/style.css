@@ -1,10 +1,12 @@
 body {
     padding: 80px 20px;
-    background-image: url("../images/ricepaper.png");
+    background-image: url("../images/background.jpg");
     background-repeat: repeat;
     font-family: 'Acme', sans-serif;
     color: black;
 }
+
+
 
 .game-cell {
     cursor: pointer;
@@ -21,4 +23,10 @@ body {
 
 navbar {
     background-color: transparent;
+}
+
+#retry-button {
+    margin: auto;
+    position: relative;
+    left: 65px;
 }

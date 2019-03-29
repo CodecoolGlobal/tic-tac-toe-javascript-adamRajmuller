@@ -9,7 +9,8 @@
         <button id="retry-button" class="btn btn-success">Try again?</button>
         <a href="/" class="btn btn-outline-dark">Reset settings</a>
     </nav>
-    <div id="game-board" class="mb-3" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}" data-win-size="{{ win_size }}">
+    <p class="h3 text-center">Reach {{ win_size }} in a row to WIN!</p>
+    <div id="game-board" class="mb-3 text-center" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}" data-win-size="{{ win_size }}">
         {% for row in range(row_num) %}
             <div>
                 {% for col in range(col_num) %}
