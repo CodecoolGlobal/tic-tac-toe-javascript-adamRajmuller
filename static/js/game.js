@@ -1,27 +1,49 @@
 const gameCells = document.getElementsByClassName('game-cell');
-const table = document.getElementById('game-board');
+const gameBoard = document.getElementById('game-board');
 
 
 let playerTurn = 0;
-function getMark () {
-    if (playerTurn) {
-        playerTurn = !playerTurn;
-        return `O`
-    }
-    else {
-        playerTurn = !playerTurn;
-        return `X`
-    }
-    }
 
-for (gameCell of gameCells) {
-    gameCell.addEventListener('click', function (e) {
-        if (e.target.innerHTML === '') {
-            e.target.innerHTML = getMark()
-    }});
+function checkCell () {
+    return event.target.innerHTML
 }
 
-function winChecker() {
+function getMaxBetweenRowsAndCols(){
+    return Math.max(parseInt(gameBoard.dataset.rowNum), parseInt(gameBoard.dataset.colNum))
+
+}
+
+function getMark () {
+    if (!checkCell()) {
+        if (playerTurn) {
+            playerTurn = !playerTurn;
+            event.target.innerHTML = `O`
+        }
+        else {
+            playerTurn = !playerTurn;
+            event.target.innerHTML = `X`
+        }
+    }
+}
+
+
+function winChecker(mark) {
     let counter = 0;
-    for
+    const pointsToWin = gameBoard.dataset.winSize;
+    for (let x = 0; x <= parseInt(gameBoard.dataset.rowNum); x++) {
+        for (let y = 0; y < parseInt(gameBoard.dataset.colNum); y++) {
+            if (gameCells.dataset.coordinateX === String(x) && gameCells.dataset.coordinateY === String(y)) {
+
+
+            }
+
+
+        }
+    }
+}
+
+
+
+for (gameCell of gameCells) {
+    gameCell.addEventListener('click', getMark)
 }
