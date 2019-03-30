@@ -223,9 +223,7 @@ function winChecker() {
 }
 
 function clearCells () {
-    for (gameCell of gameCells) {
-        gameCell.innerHTML = ''
-    }
+    location.reload()
 }
 
 
