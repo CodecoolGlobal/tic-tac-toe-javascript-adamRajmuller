@@ -37,6 +37,90 @@ function getSquareDom (x, y) {
 }
 
 
+function checkDiagonal (x, y, pointsToWin, mark) {
+    let counter = 0;
+
+    let countingY = y;
+    for (let i = parseInt(x); i < (parseInt(x) + pointsToWin); i++) {  //checks down/right
+        try {
+            if (getSquareDom(i, countingY).innerHTML === mark) {
+                countingY += 1;
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
+            } else {
+                break;
+            }
+        } catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+
+    counter = 0;
+    countingY = y;
+    for (let i = parseInt(x); i < (parseInt(x) + pointsToWin); i++) {  //checks down/left
+        try {
+            if (getSquareDom(i, countingY).innerHTML === mark) {
+                countingY -= 1;
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
+            } else {
+                break;
+            }
+        } catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+
+    counter = 0;
+    let countingX = x;
+    countingY = y;
+    for (let i = parseInt(x); i < (parseInt(x) + pointsToWin); i++) {  //checks up/right
+        try {
+            if (getSquareDom(countingX, countingY).innerHTML === mark) {
+                countingX -= 1;
+                countingY += 1;
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
+            } else {
+                break;
+            }
+        } catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+
+    counter = 0;
+    countingX = x;
+    countingY = y;
+    for (let i = parseInt(x); i < (parseInt(x) + pointsToWin); i++) {  //checks up/left
+        try {
+            if (getSquareDom(countingX, countingY).innerHTML === mark) {
+                countingX -= 1;
+                countingY -= 1;
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
+            } else {
+                break;
+            }
+        } catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+    return false;
+}
+
 function checkHorizontal (x, y, pointsToWin, mark) {
     let counter = 0;
 
@@ -131,29 +215,12 @@ function winChecker() {
     const currentSquare = event.target;
     let x = event.target.dataset.coordinateX; //parseInt kene
     let y = event.target.dataset.coordinateY; //parseInt kene
-    if (checkHorizontal(x, y, pointsToWin, mark) || checkVertical(x, y, pointsToWin, mark)) {
+    if (checkHorizontal(x, y, pointsToWin, mark) ||
+        checkVertical(x, y, pointsToWin, mark) ||
+        checkDiagonal(x, y, pointsToWin, mark)) {
         alert('NYERT a lofasz')}
-    else {
-        alert('nem nyert')
-    }
 }
 
-
-// function winChecker(mark) {
-//     let counter = 0;
-//     const pointsToWin = gameBoard.dataset.winSize;
-//     for (let x = 0; x <= getNumberOfRows(); x++) {
-//         for (let y = 0; y < getNumberOfCols(); y++) {
-//             let currentSquare = getSquareDom('x', 'y');
-//             if (currentSquare.innerHTML === mark) {
-//
-//                 for
-//             }
-//
-//
-//         }
-//     }
-// }
 
 
 for (gameCell of gameCells) {
