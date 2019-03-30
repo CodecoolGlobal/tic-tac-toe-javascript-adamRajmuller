@@ -1,9 +1,3 @@
-const gameCells = document.getElementsByClassName('game-cell');
-const gameBoard = document.getElementById('game-board');
-
-
-let playerTurn = 0;
-
 function checkCell () {
     return event.target.innerHTML
 }
@@ -20,11 +14,13 @@ function putMark () {
     if (!checkCell()) {
         if (playerTurn) {
             playerTurn = !playerTurn;
-            event.target.innerHTML = `O`
+            event.target.innerHTML = `O`;
+            currentPlayer.innerText = "Choose a square 'X'";
         }
         else {
             playerTurn = !playerTurn;
-            event.target.innerHTML = `X`
+            event.target.innerHTML = `X`;
+            currentPlayer.innerText = "Choose a square 'O'";
         }
     }
 }
@@ -226,8 +222,21 @@ function winChecker() {
     }
 }
 
+function clearCells () {
+    for (gameCell of gameCells) {
+        gameCell.innerHTML = ''
+    }
+}
 
 
+const gameCells = document.getElementsByClassName('game-cell');
+const gameBoard = document.getElementById('game-board');
+const retryButton = document.getElementById('retry-button');
+const currentPlayer = document.getElementById('player-turn');
+let playerTurn = 0;
+
+
+retryButton.addEventListener('click', clearCells);
 for (gameCell of gameCells) {
     gameCell.addEventListener('click', putMark);
     gameCell.addEventListener('click', winChecker);
