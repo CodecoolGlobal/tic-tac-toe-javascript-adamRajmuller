@@ -8,12 +8,15 @@ function checkCell () {
     return event.target.innerHTML
 }
 
-function getMaxBetweenRowsAndCols(){
-    return Math.max(parseInt(gameBoard.dataset.rowNum), parseInt(gameBoard.dataset.colNum))
-
+function getNumberOfCols() {
+    return parseInt(gameBoard.dataset.colNum)
 }
 
-function getMark () {
+function getNumberOfRows() {
+    return parseInt(gameBoard.dataset.rowNum)
+}
+
+function putMark () {
     if (!checkCell()) {
         if (playerTurn) {
             playerTurn = !playerTurn;
@@ -27,23 +30,133 @@ function getMark () {
 }
 
 
-function winChecker(mark) {
+function getSquareDom (x, y) {
+    return document.querySelector("[data-coordinate-y=" + CSS.escape(String(y)) + "]" +
+                                           "[data-coordinate-x=" + CSS.escape(String(x)) + "]"
+    );
+}
+
+
+function checkHorizontal (x, y, pointsToWin, mark) {
     let counter = 0;
-    const pointsToWin = gameBoard.dataset.winSize;
-    for (let x = 0; x <= parseInt(gameBoard.dataset.rowNum); x++) {
-        for (let y = 0; y < parseInt(gameBoard.dataset.colNum); y++) {
-            if (gameCells.dataset.coordinateX === String(x) && gameCells.dataset.coordinateY === String(y)) {
 
 
+    for (let i = parseInt(x); i < (parseInt(x) + pointsToWin); i++) {  //checks down
+        try {
+            if (getSquareDom(i, y).innerHTML === mark) {
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
             }
-
-
+            else {
+                break;
+            }
         }
+        catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+    counter = 0;
+    for (let i = parseInt(x); i > (parseInt(x) - pointsToWin); i--) {  //checks up
+        try {
+            if (getSquareDom(i, y).innerHTML === mark) {
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
+            }
+            else {
+                counter = 0;
+                break;
+            }
+        }
+        catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+    return false
+}
+
+
+function checkVertical (x, y, pointsToWin, mark) {
+    let counter = 0;
+
+
+    for (let i = parseInt(y); i < (parseInt(y) + pointsToWin); i++) {  //checks right
+        try {
+            if (getSquareDom(x, i).innerHTML === mark) {
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
+            }
+            else {
+                break;
+            }
+        }
+        catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+    counter = 0;
+    for (let i = parseInt(y); i > (parseInt(y) - pointsToWin); i--) {  //checks left
+        try {
+            if (getSquareDom(x, i).innerHTML === mark) {
+                counter += 1;
+                if (counter === pointsToWin) {
+                    return true
+                }
+            }
+            else {
+                counter = 0;
+                break;
+            }
+        }
+        catch (e) {
+            console.log('caught index error');
+            break;
+        }
+    }
+    return false
+}
+
+
+function winChecker() {
+    let mark = event.target.innerHTML;
+    const pointsToWin = parseInt(gameBoard.dataset.winSize); //parseInt kene
+    const currentSquare = event.target;
+    let x = event.target.dataset.coordinateX; //parseInt kene
+    let y = event.target.dataset.coordinateY; //parseInt kene
+    if (checkHorizontal(x, y, pointsToWin, mark) || checkVertical(x, y, pointsToWin, mark)) {
+        alert('NYERT a lofasz')}
+    else {
+        alert('nem nyert')
     }
 }
 
 
+// function winChecker(mark) {
+//     let counter = 0;
+//     const pointsToWin = gameBoard.dataset.winSize;
+//     for (let x = 0; x <= getNumberOfRows(); x++) {
+//         for (let y = 0; y < getNumberOfCols(); y++) {
+//             let currentSquare = getSquareDom('x', 'y');
+//             if (currentSquare.innerHTML === mark) {
+//
+//                 for
+//             }
+//
+//
+//         }
+//     }
+// }
+
 
 for (gameCell of gameCells) {
-    gameCell.addEventListener('click', getMark)
+    gameCell.addEventListener('click', putMark);
+    gameCell.addEventListener('click', winChecker);
 }
