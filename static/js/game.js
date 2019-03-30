@@ -164,7 +164,6 @@ function checkHorizontal (x, y, pointsToWin, mark) {
     return false
 }
 
-
 function checkVertical (x, y, pointsToWin, mark) {
     let counter = 0;
 
@@ -212,13 +211,19 @@ function checkVertical (x, y, pointsToWin, mark) {
 function winChecker() {
     let mark = event.target.innerHTML;
     const pointsToWin = parseInt(gameBoard.dataset.winSize); //parseInt kene
-    const currentSquare = event.target;
     let x = event.target.dataset.coordinateX; //parseInt kene
     let y = event.target.dataset.coordinateY; //parseInt kene
     if (checkHorizontal(x, y, pointsToWin, mark) ||
         checkVertical(x, y, pointsToWin, mark) ||
         checkDiagonal(x, y, pointsToWin, mark)) {
-        alert('NYERT a lofasz')}
+        for (gameCell of gameCells) {
+            gameCell.removeEventListener('click', putMark);
+        }
+        alert(mark + ' has won the game!');
+        for (gameCell of gameCells) {
+            gameCell.removeEventListener('click', winChecker);
+        }
+    }
 }
 
 
